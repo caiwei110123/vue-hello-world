@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+    <div>{{count}}</div>
     <el-table class="tableBox" :data="tableData" height="auto">
       <el-table-column fixed prop="date" label="日期" min-width="120">
       </el-table-column>
@@ -20,7 +21,7 @@
             查看
           </el-button>
           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
+              @click="editDialogFirst"
             type="text"
             size="small"
           >
@@ -36,12 +37,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <DialogFirst ref="dialogFirstRef"></DialogFirst>
+    <DialogFirst ref="dialogFirstRef" :formIsDisabled = 'formIsDisabled'></DialogFirst>
   </div>
 </template>
 
 <script>
 import DialogFirst from '@/views/first/components/DialogFirst'
+import {mapState} from 'vuex'
 export default {
   name:'',
   //注册
@@ -50,6 +52,7 @@ export default {
   },
   data() {
     return {
+      formIsDisabled: false,
       tableData: [],
       msg: '王苑'
     };
@@ -60,15 +63,29 @@ export default {
   },
   // 页面加载完以后，可以取到页面 dom 元素
   mounted(){
+    console.log(this.$store.state);
 
   },
+  computed: mapState({
+    count: state => state.count,
+  }),
   methods: {
     deleteRow(index, rows) {
       rows.splice(index, 1);
     },
     showDialogFirst(){
+      // 自动变更 store 的count 属性
+      this.$store.commit('increment');
+      // 设置子组件 dialog 是否显示
     this.$refs.dialogFirstRef.dialogFormVisible = true;
-      // dialogFormVisible
+    // 设置弹框无法编辑---方法1：通过 props 传参 
+    // this.formIsDisabled = true;
+    // 设置弹框无法编辑---方法2：设置子组件属性无法编辑
+   this.$refs.dialogFirstRef.isDisabled = true;
+    },
+    editDialogFirst(){
+ // 设置子组件 dialog 是否显示
+    this.$refs.dialogFirstRef.dialogFormVisible = true;
     },
     getTableDataList(){
       // 请求后台数据

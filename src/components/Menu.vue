@@ -2,7 +2,7 @@
   <el-row class="tac">
     <el-col :span="12">
       <el-menu :router="true"
-        default-active="2"
+        default-active="/first"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
@@ -50,6 +50,10 @@ export default {
       console.log(key, keyPath);
     },
   },
+  created(){
+    // 默认展示的页面
+    this.$router.push({path:'/first'});
+  }
 };
 </script>
 

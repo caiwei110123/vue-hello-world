@@ -1,8 +1,8 @@
 <template>
   <div>
 
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
+    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" @closed="closeDialog">
+      <el-form :model="form"  :disabled="isDisabled"   :disabled-test="formIsDisabled">
         <el-form-item label="活动名称" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -26,6 +26,22 @@
 
 <script>
 export default {
+  components: {
+
+  }, 
+  props: {
+    // 接收父组件传来的属性
+    formIsDisabled: {
+      default: false,
+      type: Boolean
+    }
+  },
+  methods: {
+    // 弹框关闭时候，把控制表单是否编辑的属性设置成 false
+    closeDialog(){
+      this.isDisabled = false;
+    }
+  },
   data() {
     return {
       gridData: [
@@ -52,6 +68,8 @@ export default {
       ],
       dialogTableVisible: false,
       dialogFormVisible: false,
+      // 是否显示
+      isDisabled: false,
       form: {
         name: "",
         region: "",
