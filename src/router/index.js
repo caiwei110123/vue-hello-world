@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router';
 // import first from '../views/first/first';
-import two from '../views/two';
+// import two from '../views/two/two';
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
 // 通过 Vue.extend() 创建的组件构造器，
@@ -9,7 +9,7 @@ import two from '../views/two';
 // 我们晚点再讨论嵌套路由。
 const routes = [
     { path: '/first', component: () => import('@/views/first/first') },
-    { path: '/two', component: two }
+    { path: '/two', component: () => import('@/views/two/two') }
   ]
   Vue.use(VueRouter);
   // 3. 创建 router 实例，然后传 `routes` 配置

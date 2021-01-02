@@ -4,10 +4,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router/index';
 import store from '@/store/index'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
-
+Vue.use(VueAxios, axios);
 
 
 // router.beforeEach((to, from, next) => {
@@ -18,6 +20,8 @@ Vue.use(ElementUI);
 // });
 
 new Vue({
+  axios,
+  VueAxios,
   router,
   store,
   render: h => h(App),

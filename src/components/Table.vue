@@ -1,7 +1,21 @@
 <template>
   <div class="box">
     <div>{{count}}</div>
-    <el-table class="tableBox" :data="tableData" height="auto">
+      <el-table class="tableBox" :data="tableData" height="auto" >
+      <el-table-column align="center" :fixed="item.fixed" :label="item.label"  :min-width="item.width"  v-for="(item,index) in tableConfig" :key="index" >
+        <template slot-scope="scope">
+          <div v-if="!item.canOperate">
+            {{scope.row[item.prop]}}
+          </div>
+          <div v-else>
+            <el-button v-for="(button,i) in item.operateConfig" :key="i" type="text" size="small" @click="doClick(button.mehtodName)">
+              {{button.name}}
+            </el-button>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- <el-table class="tableBox" :data="tableData" height="auto">
       <el-table-column fixed prop="date" label="日期" min-width="120">
       </el-table-column>
       <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
@@ -36,7 +50,7 @@
           </el-button>
         </template>
       </el-table-column>
-    </el-table>
+    </el-table> -->
     <DialogFirst ref="dialogFirstRef" :formIsDisabled = 'formIsDisabled'></DialogFirst>
   </div>
 </template>
@@ -49,6 +63,12 @@ export default {
   //注册
   components: {
     DialogFirst,
+  },
+  props: {
+  tableConfig: {
+    default: () => [],
+    type: Array
+  }
   },
   data() {
     return {
@@ -70,6 +90,9 @@ export default {
     count: state => state.count,
   }),
   methods: {
+    doClick(mehtodName) {
+      this[mehtodName]();
+    },
     deleteRow(index, rows) {
       rows.splice(index, 1);
     },
@@ -88,6 +111,15 @@ export default {
     this.$refs.dialogFirstRef.dialogFormVisible = true;
     },
     getTableDataList(){
+      const api = "https://getman.cn/echo";
+      this.axios.get(api).then((response) => {
+        console.log(response.data)
+      });
+
+
+      this.axios.post(api,{}).then((response) => {
+        console.log(response.data)
+      });
       // 请求后台数据
       const res = [
         
