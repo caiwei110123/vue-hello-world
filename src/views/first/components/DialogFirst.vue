@@ -5,65 +5,14 @@
       :visible.sync="dialogFormVisible"
       @closed="closeDialog"
     >
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="活动名称">
-          <el-input v-model="form.name" style="width:240px; text-align: left"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="form.region" placeholder="请选择活动区域"  style="width:240px; text-align: left">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="活动时间"  style="width:1200px; text-align: left">
-          <el-col :span="11">
-            <el-date-picker
-              type="date"
-              placeholder="选择日期"
-              v-model="form.date1"
-              style="width: 100%"
-            ></el-date-picker>
-          </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-time-picker
-              placeholder="选择时间"
-              v-model="form.date2"
-              style="width: 100%"
-            ></el-time-picker>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="即时配送">
-          <el-switch v-model="form.delivery"></el-switch>
-        </el-form-item>
-        <el-form-item label="活动性质">
-          <el-checkbox-group v-model="form.type">
-            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-            <el-checkbox label="地推活动" name="type"></el-checkbox>
-            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="特殊资源">
-          <el-radio-group v-model="form.resource">
-            <el-radio label="线上品牌商赞助"></el-radio>
-            <el-radio label="线下场地免费"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="活动形式">
-          <el-input type="textarea" v-model="form.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">立即创建</el-button>
-          <el-button>取消</el-button>
-        </el-form-item>
-      </el-form>
+      <Form   :form='form' :formConfig='formConfig'></Form>
     </el-dialog>
   </div>
 </template>
 <script>
+import Form from '@/components/Form'
 export default {
-  components: {},
+  components: {Form},
   props: {
     // 接收父组件传来的属性
     formIsDisabled: {
@@ -71,32 +20,102 @@ export default {
       type: Boolean,
     },
   },
+  created() {
+  },
   methods: {
     // 弹框关闭时候，把控制表单是否编辑的属性设置成 false
     closeDialog() {
       this.isDisabled = false;
     },
-    onSubmit(formData) {
+    onSubmit() {
       //TODO 提交表单
-      console.log(formData);
+      console.log(this.form);
       alert(123);
     },
   },
   data() {
     return {
+      count: 0,
       dialogTableVisible: false,
       dialogFormVisible: false,
       // 是否显示
       isDisabled: false,
+      formConfig: {
+        isDisabled: false,
+        formColumn: [
+          {
+            label: '活动名称',
+            prop: 'name',
+            type: 'input',
+            placeholder: '',
+            span: 12
+          },
+          {
+            label: '活动区域',
+            prop: 'region',
+            type: 'select',
+            placeholder: '',
+            selectData: [{
+              value: 'test',
+              label: '王苑'
+            },{
+              value: 'test1',
+              label: '王苑1 '
+            }]
+          },{
+             label: '时间',
+             prop: 'time',
+             type: 'daterange',
+          },{
+             label: '开关',
+             prop: 'delivery',
+             type: 'switch',
+          },{
+             label: '多选',
+             prop: 'type',
+             type: 'checkbox',
+             checkboxData: [
+               {
+                 label: '美食/餐厅线上活动',
+                 name: 'type'
+               },
+               {
+                 label: '线下主题活动',
+                 name: 'type'
+               }
+             ]
+          },{
+             label: '单选',
+             prop: 'resource',
+             type: 'radio',
+             radioData: [
+               {
+                 label: '美食/餐厅线上活动',
+                 name: 'type'
+               },
+               {
+                 label: '线下主题活动',
+                 name: 'type'
+               }
+             ]
+          },{
+            label: '描述',
+            prop: 'desc',
+            type: 'textarea'
+          }
+        ]    
+      },
       form: {
         name: "",
         region: "",
+        time: [],
         date1: "",
         date2: "",
         delivery: false,
         type: [],
         resource: "",
         desc: "",
+        value2: ''
       },
     };
   },

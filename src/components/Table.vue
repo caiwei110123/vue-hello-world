@@ -8,7 +8,7 @@
             {{scope.row[item.prop]}}
           </div>
           <div v-else>
-            <el-button v-for="(button,i) in item.operateConfig" :key="i" type="text" size="small" @click="doClick(button.mehtodName)">
+            <el-button v-for="(button,i) in item.operateConfig" :key="i" type="text" size="small" @click="doClick(button.mehtodName,scope)">
               {{button.name}}
             </el-button>
           </div>
@@ -90,7 +90,8 @@ export default {
     count: state => state.count,
   }),
   methods: {
-    doClick(mehtodName) {
+    doClick(mehtodName,scope) {
+      console.log(scope)
       this[mehtodName]();
     },
     deleteRow(index, rows) {

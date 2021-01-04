@@ -20,11 +20,11 @@ export default {
         width: "120px",
         fixed: "",
         type: '',
-        dataSource: {}
       },{
         prop: "name",
         label: "姓名11211",
         width: "120px",
+        isShow: true,
         fixed: ""
       },{
         prop: "province",
