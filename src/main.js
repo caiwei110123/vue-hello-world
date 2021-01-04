@@ -11,7 +11,6 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 
-
 // router.beforeEach((to, from, next) => {
 //   to.fullPath = 
 //   console.log(to);

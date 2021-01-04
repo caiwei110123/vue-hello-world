@@ -18,7 +18,9 @@ export default {
         prop: "date",
         label: "日期",
         width: "120px",
-        fixed: ""
+        fixed: "",
+        type: '',
+        dataSource: {}
       },{
         prop: "name",
         label: "姓名11211",
